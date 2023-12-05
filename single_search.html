@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html  lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/common.css" rel="stylesheet" type="text/css" >
+        <link href="css/nav.css" rel="stylesheet" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://raw.githubusercontent.com/douglascrockford/JSON-js/master/json2.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/json-stable-stringify/1.0.1/stable-stringify.min.js"></script>-->
+        <script src="js/single_search.js"></script>
+        <title>FHIR EMR Exchange Platform</title>
+    </head>
+
+    <body class="body">
+        <header>
+            <div class="container">
+              <div class="logo">
+                <div class="logo-image">
+                  <img src="img/logo1-removebg-preview.png" alt="FHIR電子病歷交換平台">
+                </div>
+                <div class="logo-text">
+                  FHIR
+                  <span>EMR EP</span>
+                </div>
+              </div>
+              <!--end logo-->
+              <div class="menu-box">
+                <!--nav-->
+                <div id="navigation">
+                  <a href="#" id="toggle" class="burger">
+                    <span></span>
+                  </a>
+                  <ul id="hz_menu">
+                    <a href="#" id="toggle" class="burger">
+                      <span></span>
+                    </a>
+  
+                    <li class="menu-item">
+                      <a href="xxxx.php">資料查詢 ▽</a>
+                      <div class="submenu text-dark">
+                        <ul>
+                          <li ><a href="single_search.html">單項查詢</a></li>
+                          <li ><a href="batch_search_1.php">批次查詢</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                      <a href="xxxx.php">聯絡資訊</a>
+                    </li>
+                    <li>
+                      <a href="index.html">首頁</a>
+                    </li>
+                  </ul>
+                </div>
+                <!--end nav-->
+              </div>
+            </div>
+          </header>
+
+    <main>
+      <section class="section-box-2 vh-20" data-pages-bg-image="img/single_search_bg1.jpg" 
+      data-pages="parallax" data-bg-overlay data-overlay-opacity="0" 
+      style="background-image:url(img/single_search_bg1.jpg);" 
+      background-position: center 35.2355%;>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="text-center">
+              <h2 class="b mb-2 text-black">
+                單項查詢
+              </h2>
+              <p class="font-size-1">(根據病歷號搜尋特定病人)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="vh-40" style="display: block;">
+        <div class="content__inner">
+          <div  class="card mt-3">
+            <div class="card-header">
+              <li class="font-size-3" style="display:inline;">
+                輸入ID
+                <br>
+              </li>
+            </div>
+            <div class="card-body bg-light-2" style="display: block;">
+              
+              <input class="form-control query-input" placeholder="請輸入要查詢的病歷號">
+              <table class="w-100 mt-4 font-size-0">
+                <tbody>
+                  <tr>
+                    <td>
+                      <button class="btn btn-info btn-lg" onclick ="searchPatient()">送出</button>
+                    </td>
+                  </tr>
+                </tbody>       
+              </table>     
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="result-section" style="display: none;">
+        <table class="table" style="width: 100%;">
+          <thead class="result-table bg-light-3">
+              <tr>
+                <th scope="col">選擇</th>
+                <th scope="col" id="name">病人姓名</th>
+                <th scope="col" id="identifier">病歷號</th>
+                <th scope="col" id="gender">性別</th>
+                <th scope="col" id="birthDate">出生日期</th>
+              </tr>
+          </thead>
+          <tbody class="result-table-body" style="text-align:center;">
+              <!-- js表格 -->
+          </tbody>
+        </table>
+        <section class="btn-layout">
+          <button class="btn btn-info btn-lg vertical-center" onclick="singleSelect()" >轉換</button>
+        </section>
+      </section>
+      <div id="jsonOutput" class="mt-4" style="background-color: #eeeddf ; ">
+        <!--json內容-->
+      </div>  
+
+      <!-- 搜尋結果區域 -->
+      <div class="result-section" style="display: none;">
+      <!-- 這裡可以添加其他搜尋結果的顯示元素 -->
+      </div>
+    </main>    
+    </body>
+</html>

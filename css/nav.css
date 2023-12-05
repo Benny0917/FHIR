@@ -1,0 +1,170 @@
+@charset "utf-8";
+/*burger
+========================================== */
+
+@media only screen and (max-width: 900px) {
+	.burger span {
+		position: relative;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -15px;
+		margin-top: -1.5px;
+	}
+	.burger span, .burger span::before, .burger span::after {
+		display: block;
+		width: 30px;
+		height: 1px;
+		background-color: #fff;
+		outline: 1px solid transparent;
+		-webkit-transition-property: background-color, -webkit-transform;
+		-moz-transition-property: background-color, -moz-transform;
+		-o-transition-property: background-color, -o-transform;
+		transition-property: background-color, transform;
+		-webkit-transition-duration: .5s;
+		-moz-transition-duration: .5s;
+		-o-transition-duration: .5s;
+		transition-duration: .5s;
+	}
+	.burger span::before, .burger span::after {
+		position: absolute;
+		content: "";
+	}
+	.burger span::before {
+		top: -9px;
+	}
+	.burger span::after {
+		top: 9px;
+	}
+	.burger.clicked span {
+		background-color: transparent;
+	}
+	.burger.clicked span::before {
+		-webkit-transform: translateY(9px) rotate(45deg);
+		-moz-transform: translateY(9px) rotate(45deg);
+		-ms-transform: translateY(9px) rotate(45deg);
+		-o-transform: translateY(9px) rotate(45deg);
+		transform: translateY(9px) rotate(45deg);
+	}
+	.burger.clicked span::after {
+		-webkit-transform: translateY(-9px) rotate(-45deg);
+		-moz-transform: translateY(-9px) rotate(-45deg);
+		-ms-transform: translateY(-9px) rotate(-45deg);
+		-o-transform: translateY(-9px) rotate(-45deg);
+		transform: translateY(-9px) rotate(-45deg);
+	}
+	.burger.clicked span:before, .burger.clicked span:after {
+		background-color: rgba(255, 255, 255, 1);
+	}
+	.burger:hover {
+		cursor: pointer;
+	}
+}
+/*burger
+========================================== */
+
+#hz_menu, #hz_menu ul {	
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#hz_menu {
+	width: 100%;
+	margin: 0 auto;
+}
+#hz_menu:before, #hz_menu:after {
+	content: "";
+	display: table;
+}
+#hz_menu:after {
+	clear: both;
+}
+#hz_menu {
+	zoom: 1;
+}
+#hz_menu li {
+	float: right;
+	position: relative;
+}
+
+#hz_menu ul li {
+	border-right: none;
+}
+#hz_menu li:first-child {
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+#hz_menu ul li:first-child {
+	border-left: none;
+}
+
+#hz_menu a {
+	float: left;
+	padding: 8px 30px;
+	color: #fff;
+	text-transform: uppercase;
+	text-decoration: none;
+	-webkit-transition: transform 0.2s linear, -webkit-box-shadow 0.2s linear;
+    -moz-transition: transform 0.2s linear, -moz-box-shadow 0.2s linear;
+    transition: transform 0.2s linear, box-shadow 0.2s linear;
+}
+#hz_menu li.menu-item {
+    position: relative;
+}
+
+#hz_menu .submenu {
+    display: none;
+    position: absolute;
+    top: 100%; /* 讓選單出現在 "資料查詢" 下方 */
+    left: 0;
+    background-color: rgba(240, 240, 240, 0.5); 
+    /*border: 1px solid #3e3a3a; */
+    z-index: 1; /* 確保選單在最上層 */
+}
+
+#hz_menu .submenu ul li:nth-child(1) a,
+#hz_menu .submenu ul li:nth-child(2) a {
+    color: #333; /* 選項的文字顏色 */
+    
+}
+
+#hz_menu .submenu ul li {
+    color: #333; /* 選項的文字顏色 */
+    padding: 15px; /* 選項的內邊距 */
+}
+
+#hz_menu .submenu ul li:hover {
+    background-color: #8b8787; /* 選項的背景色 */
+}
+
+#hz_menu li.menu-item:hover .submenu {
+    display: block;
+}
+
+
+
+
+
+
+
+a#toggle {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	color: white;
+	display: none;
+	-webkit-transition: all ease-out 0.3s;
+	-moz-transition: all ease-out 0.3s;
+	-o-transition: all ease-out 0.3s;
+	transition: all ease-out 0.3s;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: rgba(0, 0, 0, 0.3);
+	top: 10px;
+	left: -40px;
+	border-radius: 0px;
+}

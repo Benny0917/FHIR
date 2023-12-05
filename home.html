@@ -1,137 +1,105 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
-  <title>Login Page</title>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/common.css" rel="stylesheet" type="text/css" >
+    <link href="css/nav.css" rel="stylesheet" type="text/css">
+    <title>FHIR EMR Exchange Platform</title>
+    <style>
+      body{
+        overflow: hidden;
+      }
 
-    * {
-        box-sizing: border-box;
-    }
-    body {   
-      /*font-family: 'Ma Shan Zheng', cursive;*/
-      margin: 0;
-      display: flex;
-      /*flex-direction: column;*/
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      /*background: url(img/emr1.jpg) center/cover no-repeat;*/
-      background: linear-gradient(to right, #354649 ,#6C7A89  , #A3C6C4 , #E0E7E9  );
-    }
-    /*
-    .header {
-      width: 50%;
-      font-family: 'Klee One', cursive;
-      color: #e7d8f0;
-      font-size: 24px;
-      font-weight: 900;
-      padding: 10px 20px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border: 10px double #e6c4c4dc;
-    }
-    */
-    .login-container {
-      padding: 20px;
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      font-size:21px;
-      /*font-family: 'ZCOOL KuaiLe', sans-serif;*/
-      /*margin: 80px 20px 0;*/
-      background-color: rgba(240, 240, 240, 0.5);
-      /*background: linear-gradient(45deg, #ffffff, #f0f0f0);*/
-      border: 2px solid #ddd; /* 添加邊框 */
-      border-radius: 8px;
-    }
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      text-align:left;
-      font-size:18px;
-      font-family: Unica One, sans-serif;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px outset #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #4caf50;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 20px;
-      
-    }
-
-    button:hover {
-      background-color: #45a049;
-      width: 90px;
-      border-style: solid;
-      border-width: 1.5px;
-    }
-  </style>
+    </style>
 </head>
-<body>
 
-<div class="header">
-    <h1>FHIR電子病歷交換平台</h1>
-</div>
--->
-<!-- <div class="login-container">
-  <h2>Login</h2>
-  <div class="form-group">
-    <label for="username">🧍Username:</label>
-    <input type="text" id="username" name="username" placeholder="請輸入你的帳號">
-  </div>
+<body class="body">
+  <header>
+    <div class="container">
+      <div class="logo">
+        <div class="logo-image">
+          <img src="img/logo1-removebg-preview.png" alt="FHIR電子病歷交換平台">
+        </div>
+        <div class="logo-text">
+          FHIR
+          <span>EMR EP</span>
+        </div>
+      </div>
+      <!--end logo-->
+      <div class="menu-box">
+        <!--nav-->
+        <div id="navigation">
+          <a href="#" id="toggle" class="burger">
+            <span></span>
+          </a>
+          <ul id="hz_menu">
+            <a href="#" id="toggle" class="burger">
+              <span></span>
+            </a>
 
-  <div class="form-group">
-    <label for="password">🔒Password:</label>
-    <input type="password" id="password" name="password" placeholder="請輸入你的密碼">
-  </div>
+            <li class="menu-item">
+              <a>資料查詢 ▽</a>
+              <div class="submenu text-dark">
+                <ul>
+                  <li ><a href="single_search.html">單項查詢</a></li>
+                  <li ><a href="batch_search_1.php">批次查詢</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="xxxx.php">聯絡資訊</a>
+            </li>
+            <li>
+              <a >首頁</a>
+            </li>
+          </ul>
+        </div>
+        <!--end nav-->
 
-  <button onclick="login()">➣</button>
-</div> -->
+  </header>
 
-<!-- <script>
-  function login() {
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+  <main>
+    <section class="section-box vh-90" data-pages-bg-image="img/index-background1.jpg" 
+    data-pages="parallax" data-bg-overlay data-overlay-opacity="0" 
+    style="background-image:url(img/index-background1.jpg);" 
+    background-position: center;>
+      <div class="container">
 
-    // 預設的帳號和密碼
-    var defaultUsername = 'root';
-    var defaultPassword = '12345678';
+        <div class="row">
+          <div class="col-12 col-md-5">
+            <h5 class="b mb-2 text-dark">
+            FHIR
+            <span>電子病歷交換平台</span>
+            </h5>
+            <p class="name-platform">FHIR EMR Exchange Platform</p>
+            <p class="pt-4 text-dark">
+              此平台是用來解決電子病歷資料轉換的問題。
+              各醫療單位可將病歷資料上傳至此平台，並將XML的格式轉換成JSON, 
+              且轉換後可以自動上傳至FHIR伺服器內，完成資料的交換。</p>
+          </div>
+        </div>
+      </div>
 
-    if (username === defaultUsername && password === defaultPassword) {
-      alert('Login successful!');
-      // 登入成功，將標記存儲在本地
-      localStorage.setItem('token', 'your_jwt_token');
-      // 導航到平台頁面
-      window.location.href = 'home.html';
-    } else {
-      alert('Invalid username or password. Please try again.');
-    }
-  }
-</script> -->
+      <div class="bg-overlay" style="opacity: 0;"></div>
+      
+    </section>
+   
 
-<!-- </body>
-</html>  -->
+    <footer>
+      <div class="container" >
+        <div class="row">
+          <p>&copy; 2023 FHIR EMR Exchange Platform.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+</body>
+
+</html>   

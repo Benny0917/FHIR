@@ -122,7 +122,7 @@
                 <a href="xxxx.php">聯絡資訊</a>
                 </li>
                 <li>
-                <a>首頁</a>
+                <a href="home.html">首頁</a>
                 </li>
 
             </ul>

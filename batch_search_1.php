@@ -84,6 +84,29 @@
     <link href="css/common.css" rel="stylesheet" type="text/css" >
     <link href="css/nav.css" rel="stylesheet" type="text/css">
     <title>FHIR EMR Exchange Platform</title>
+    <style>
+      .form-layout2 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .form-layout2 label {
+        width: 120px; /* 調整標籤的寬度 */
+      }
+
+      .form-layout2 input,
+      .form-layout2 select {
+        flex: 1; /* 讓輸入框填滿剩餘空間 */
+        font-size: 1rem;
+      }
+      #hz_menu a {
+            font-family: "Kanit", sans-serif;
+            font-size: 19px;
+            margin-top: -10px;
+            /* 其他樣式屬性 */
+        }
+    </style>
 </head>
 <body class="body">
     <header>
@@ -139,18 +162,23 @@
           
           <div class="row justify-content-center">
             <div class="text-center">
-              <h2 class="b mb-2 text-black">
+              <h2 class="b mb-2 text-black" style="font-size: 2.4rem;">
                 批次查詢
               </h2>
-              <p class="font-size-1">(根據需求條件一次查詢多個病人)</p>
+              <p class="font-size-1" style="font-size: 1rem;">(根據需求條件一次查詢多個病人)</p>
             </div>
           </div>
         </div>
       </section>
+      <form method="post">
+      <div style="margin-left:46%; font-size:2.3rem;">查詢條件
+      
+      <input type="submit" class="btn btn-info btn-lg vertical-center" style="margin-left:3%;" value="查詢">
+      </div>
       <div class="bg-light-2">
         <div style="height: auto; margin-bottom: 0px; margin-right: 0px;">
             <hr>
-            <form method="post">
+            
                 <div class="form-layout1">
                     <div class="form-layout2">
                       <label  for="searchOption">申報醫院代碼:</label>
@@ -161,24 +189,19 @@
                       <label for="gender">生理性別:</label>
                       <select name="gender">
                         <option value="">皆要</option>
-                        <option value="男">男</option>
-                        <option value="女">女</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
                       </select>
                       <hr>
                     </div>
                     <div class="form-layout2">
-                      <label for="datetime">出生年份(起始):</label>
+                      <label for="datetime">出生日期(起始):</label>
                       <input type="date" name="Sdatetime"placeholder="請輸入西元年" style="font-size: 1rem;" required>
                       <hr>
                     </div>
                     <div class="form-layout2">
-                      <label for="datetime">出生年份(結束):</label>
+                      <label for="datetime">出生日期(結束):</label>
                       <input type="date" name="Edatetime"placeholder="請輸入西元年" style="font-size: 1rem;" required>
-                      <hr>
-                    </div>
-                    <div class="form-layout2">
-                      <label for="residencyCode">戶籍地代碼:</label>
-                      <input type="number" name="residencyCode" placeholder="請輸入戶籍地代碼" style="font-size: 1rem;">
                       <hr>
                     </div>
                     <div class="form-layout2">
@@ -212,15 +235,11 @@
                       <input type="date" name="firstVisitDate">
                       <hr>
                     </div>
-                  <div class="btn-layout">
-                    <input type="submit" class="btn btn-info btn-lg vertical-center" style="align-items: center;" value="查詢">
-                    <!-- <input class="btn btn-info btn-lg" style="align-items: center;" onclick="searchPatients()">送出</> -->
-                  </div>
                 </div>
             </form>
-            
         </div>
       </div>
+      <div style="margin-left:46%; font-size:2rem;">查詢結果</div>
       <form method="post" action="transform.php">
           <section class="result-section">
             <?php
@@ -268,13 +287,12 @@
                 </tbody>
             </table>
             <?php }?>
-            <section class="btn-layout">
-                <!-- <button class="btn btn-info btn-lg vertical-center" >轉換</button> -->
-                <input type="submit" class="btn btn-info btn-lg vertical-center" style="align-items: center;" value="產生Json格式">
+            <section class="btn-layout"  >
+                <input type="submit" class="btn btn-info btn-lg vertical-center" style="align-items: center;" value="產生Json格式" >
             </section>
         </section>
       </form>
-      
+
     </main>
 </body>
 </html>

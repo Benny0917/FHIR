@@ -115,6 +115,7 @@
     position: relative;
 }
 
+
 #hz_menu .submenu {
     display: none;
     position: absolute;
@@ -130,10 +131,13 @@
     color: #333; /* 選項的文字顏色 */
     
 }
+#hz_menu .submenu ul li {
+    width: 200px; /* 更改為你想要的寬度值 */
+}
 
 #hz_menu .submenu ul li {
     color: #333; /* 選項的文字顏色 */
-    padding: 15px; /* 選項的內邊距 */
+    
 }
 
 #hz_menu .submenu ul li:hover {

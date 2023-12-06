@@ -57,7 +57,7 @@
                 <a href="xxxx.php">聯絡資訊</a>
                 </li>
                 <li>
-                <a>首頁</a>
+                <a href="home.html">首頁</a>
                 </li>
 
             </ul>
@@ -72,7 +72,7 @@
             style="background-image:url(img/single_search_bg1.jpg);" 
             background-position: center 35.2355%;>
             <div class="container">
-            
+
             <div class="row justify-content-center">
                 <div class="text-center">
                 <h2 class="b mb-2 text-black">
@@ -84,7 +84,7 @@
         </section>
             <pre id="jsonContainers"></pre>
         </main>
-        
+
     <?php
 
 
@@ -99,7 +99,7 @@
         $data = explode(",", $selectedData);
         //echo var_dump($data);
         echo "<div class='json-result-container-$index'>";
-        
+
         $patient = [
             "resourceType" => "Patient",
             "id" => $data[0],
@@ -135,7 +135,7 @@
                     "value" => $data[2]
                 ]
             ],
-           
+
             "name" => [
                 [
                     "given" => [$data[4]],
@@ -210,19 +210,19 @@
                 "reference" => $data[13]
             ]
         ];
-        
+
         $manyPatient[] = $patient; 
-        
+    
         // 轉換為 JSON 格式
-        $jsonData = json_encode( $manyPatient, JSON_PRETTY_PRINT);
         
+
         // 輸出 JSON
         echo "<script>document.getElementsByClassName('json-result-container-$index')[document.getElementsByClassName('json-result-container-$index').length - 1].innerHTML += '<pre>' + JSON.stringify(" . json_encode($patient, JSON_PRETTY_PRINT) . ", null, 2) + '</pre>';</script>";
-
         // 關閉 <div> 標籤
         echo "</div>";
-        }
+    } 
     }
+    $jsonData = json_encode($manyPatient, JSON_PRETTY_PRINT);
 
 ?>
         <section class="btn-layout">
@@ -230,25 +230,21 @@
         </section>
 
         <script>
-            // 取得 PHP 產生的 JSON 資料
-            var jsonData = <?php echo json_encode($manyPatient, JSON_PRETTY_PRINT); ?>;
+        
+ // 取得要顯示 JSON 資料的容器
+var jsonContainer = document.getElementById('jsonContainers');
 
-            // 取得要顯示 JSON 資料的容器
-            var jsonContainers = document.querySelectorAll('[class^="json-result-container-"]');
-            // 在顯示新的 JSON 資料之前清空容器
-            jsonContainers.forEach(function(container) {
-                container.innerHTML = '';  // 清空容器內容
-            });
+// 在顯示新的 JSON 資料之前清空容器
+jsonContainer.innerHTML = '';
 
-            // 將 JSON 資料轉換成字串，並顯示在各自的容器中
-            jsonContainers.forEach(function(container) {
-                container.innerHTML += '<pre>' + JSON.stringify(jsonData, null, 2) + '</pre>';
-            });
+// 將 JSON 資料轉換成字串，並顯示在容器中
+jsonContainer.innerHTML += '<pre>' + JSON.stringify(jsonData, null, 2) + '</pre>';
+
 
             function uploadPatients() {
             // 取得 PHP 產生的 JSON 資料
             var jsonData = <?php echo $jsonData; ?>;
-                
+
             console.log(jsonData);
 
             // 迭代所有選擇的病人

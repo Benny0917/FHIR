@@ -16,6 +16,9 @@ $resultTable1 = $link->query($sqlTable1);
 $sqlTable2 = "SELECT * FROM cancer_reg_short_form";
 $resultTable2 = $link->query($sqlTable2);
 
+$sqlTable3 = "SELECT * FROM user_login";
+$resultTable3 = $link->query($sqlTable3);
+
 // 初始化 $output 陣列
 $output = array();
 
@@ -29,6 +32,9 @@ while ($row = $resultTable2->fetch_assoc()) {
     $output[] = $row; // 將 table2 的資料加入 $output 陣列
 }
 
+while ($row = $resultTable3->fetch_assoc()) {
+    $output[] = $row; // 將 table2 的資料加入 $output 陣列
+}
 // 判斷是否有資料返回
 if (!empty($output)) {
     // 將資料陣列轉成 JSON 並顯示在網頁上，並要求不把中文編成 UNICODE

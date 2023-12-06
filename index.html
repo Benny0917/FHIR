@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/common.css" rel="stylesheet" type="text/css" >
     <link href="css/nav.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
     <title>FHIR EMR Exchange Platform</title>
     <style>
       body{
@@ -104,7 +105,7 @@
             <input type="password" id="password" name="password" placeholder="請輸入你的密碼">
           </div>
         
-          <button onclick="login()">➣</button>
+          <button onclick="handleLogin(event)">➣</button>
         </div>
     </div>
 
@@ -148,24 +149,35 @@
  
 
   <script>
-    function login() {
-      var username = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
-  
-      // 預設的帳號和密碼
-      var defaultUsername = 'root';
-      var defaultPassword = '12345678';
-  
-      if (username === defaultUsername && password === defaultPassword) {
-        alert('Login successful!');
-        // 登入成功，將標記存儲在本地
-        localStorage.setItem('token', 'your_jwt_token');
-        // 導航到平台頁面
+function handleLogin(event) {
+  event.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // 使用 fetch 發送 POST 請求到 PHP 後端
+  fetch('login.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `username=${username}&password=${password}`,
+  })
+    .then(response => response.json())
+    .then(user => {
+      // 檢查 PHP 後端驗證結果
+      if (user) {
+        // 登入成功，執行相應操作
+        localStorage.setItem('user', user.user_id);
         window.location.href = 'home.html';
       } else {
+        // 登入失敗，顯示錯誤訊息
         alert('Invalid username or password. Please try again.');
       }
-    }
+    })
+    .catch(error => console.error('錯誤:', error));
+}
+
   </script>
 
 </body>

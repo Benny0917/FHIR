@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 
 function searchPatientInDatabase($patient_identifier, $conn) {
     $sql = "SELECT * FROM patient WHERE patient_identifier = '$patient_identifier'";
-    $result = $conn->query($sql);
+    $result = $conn->query($sql);   
 
     if ($result->num_rows > 0) {
         $patientData = array();

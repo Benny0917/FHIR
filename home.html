@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/common.css" rel="stylesheet" type="text/css" >
     <link href="css/nav.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
     <title>FHIR EMR Exchange Platform</title>
     <style>
       body{
@@ -20,7 +21,16 @@
             font-size: 19px;
             margin-top: -10px;
             /* 其他樣式屬性 */
-        }
+      }
+      
+      #logout-button {
+      padding: 5px 30px; /* 設定內邊距，調整按鈕大小 */
+      font-family: "Kanit", sans-serif; /* 設定字體 */
+      font-size: 17px; /* 設定字體大小 */
+      color: white;
+      background-color: #014385;
+      margin-top: -5px;
+      }
 
     </style>
 </head>
@@ -62,7 +72,7 @@
               <a href="xxxx.php">聯絡資訊</a>
             </li>
             <li>
-              <a >首頁</a>
+              <button id="logout-button" onclick="handleLogout()">登出</button>
             </li>
           </ul>
         </div>
@@ -105,7 +115,15 @@
         </div>
       </div>
     </footer>
-
+    <script>
+    // 定義 handleLogout 函式
+    function handleLogout() {
+      if (localStorage.getItem('user')) {
+        localStorage.removeItem('user'); // 移除用户信息
+        window.location.href = 'index.html'; // 跳转到用户登录页面
+      }
+    }
+  </script>
 </body>
 
 </html>   

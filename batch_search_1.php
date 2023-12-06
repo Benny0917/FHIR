@@ -83,6 +83,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/common.css" rel="stylesheet" type="text/css" >
     <link href="css/nav.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
     <title>FHIR EMR Exchange Platform</title>
     <style>
       .form-layout2 {
@@ -253,8 +254,7 @@
                       <th scope="col">病人姓名</th>
                       <th scope="col">病歷號</th>
                       <th scope="col">性別</th>
-                      <th scope="col">出生年份</th>
-                      <th scope="col">戶籍地代碼</th>
+                      <th scope="col">出生日期</th>                      
                       <th scope="col">診斷年齡</th>
                       <th scope="col">臨床分級化</th>
                       <th scope="col">原發部位</th>
@@ -277,7 +277,6 @@
                       <td><?php echo $row["patient_identifier"]; ?></td>
                       <td><?php echo $row["patient_gender"]; ?></td>
                       <td><?php echo $row["patient_birthDate"]; ?></td>
-                      <td><?php echo $row["resid"]; ?></td>
                       <td><?php echo $row["diagage"]; ?></td>
                       <td><?php echo $row["grade_c"]; ?></td>
                       <td><?php echo $row["casite"]; ?></td>

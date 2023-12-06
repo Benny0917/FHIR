@@ -189,7 +189,7 @@
                     <div class="form-layout2">
                       <label for="gender">生理性別:</label>
                       <select name="gender">
-                        <option value="">皆要</option>
+                        <option value="">All</option>
                         <option value="male">男</option>
                         <option value="female">女</option>
                       </select>

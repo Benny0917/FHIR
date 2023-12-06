@@ -1,7 +1,9 @@
 <?php
-
-header('Content-Type: application/json'); // 確保正確的 JSON 頭
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
 
 // 連接資料庫
 $servername = "localhost"; // 你的資料庫伺服器位置
@@ -18,26 +20,32 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 從前端接收用戶名
-    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    // 從前端接收用戶名和密碼
+    $data = json_decode(file_get_contents("php://input"));
+
+    $username = isset($data->username) ? $data->username : '';
+    $password = isset($data->password) ? $data->password : '';
 
     // 執行查詢
-    $query = "SELECT * FROM user_login WHERE user_account = '$username'";
-    $result = $conn->query($query);
-
+    $stmt = $conn->prepare("SELECT * FROM user_login WHERE user_account = ? AND user_password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
     // 檢查查詢結果
-    if (!$result) {
+    if (!$stmt) {
         die("資料庫查詢錯誤: " . $conn->error);
     }
-
-    // 將查詢結果轉換為關聯數組
-    $user = $result->fetch_assoc();
-
-    // 將結果發送回前端
-    header('Content-Type: application/json');
-    echo json_encode($user, JSON_PRETTY_PRINT);
+    
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        // 密碼匹配，將用戶發送回前端
+        echo json_encode($user, JSON_PRETTY_PRINT);
+    } else {
+        // 密碼不匹配或用戶不存在，返回錯誤訊息
+        echo json_encode(['error' => 'Invalid username or password. Please try again.']);
+        http_response_code(401);  // Unauthorized
+        error_log("Login Error: " . json_encode(['error' => 'Invalid username or password. Please try again.']));
+    }
 }
-
-// 關閉連接
-$conn->close();
 ?>

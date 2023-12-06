@@ -114,8 +114,7 @@
   <main>
     <section class="section-box vh-90" data-pages-bg-image="img/index-background1.jpg" 
     data-pages="parallax" data-bg-overlay data-overlay-opacity="0" 
-    style="background-image:url(img/index-background1.jpg);" 
-    background-position: center;>
+    style="background-image:url(img/index-background1.jpg);background-position: center;">
       <div class="container">
 
         <div class="row">
@@ -148,37 +147,46 @@
     </footer>
  
 
-  <script>
-function handleLogin(event) {
-  event.preventDefault();
-
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  // 使用 fetch 發送 POST 請求到 PHP 後端
-  fetch('login.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: `username=${username}&password=${password}`,
-  })
-    .then(response => response.json())
-    .then(user => {
-      // 檢查 PHP 後端驗證結果
-      if (user) {
-        // 登入成功，執行相應操作
-        localStorage.setItem('user', user.user_id);
-        window.location.href = 'home.html';
-      } else {
-        // 登入失敗，顯示錯誤訊息
-        alert('Invalid username or password. Please try again.');
+    <script>
+      function handleLogin(event) {
+        event.preventDefault();
+      
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+      
+        // 使用 AJAX 發送 POST 請求到 PHP 後端
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'login.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+      
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              // 處理成功回應
+              const result = JSON.parse(xhr.responseText);
+              if ('error' in result) {
+                alert(result.error);
+              } else {
+                localStorage.setItem('user', result.user_id);
+                window.location.href = 'home.html';
+              }
+            } else {
+              // 處理錯誤回應
+              console.error('錯誤:', xhr.status);
+              alert('登入失敗，帳號密碼有誤。');
+            }
+          }
+        };
+      
+        const requestBody = JSON.stringify({
+          username: username,
+          password: password
+        });
+      
+        xhr.send(requestBody);
       }
-    })
-    .catch(error => console.error('錯誤:', error));
-}
-
-  </script>
+      </script>
+      
 
 </body>
 

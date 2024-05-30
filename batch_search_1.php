@@ -134,7 +134,7 @@
                 </a>
 
                 <li class="menu-item">
-                <a href="xxxx.php">資料查詢 ▽</a>
+                <a>資料查詢 ▽</a>
                 <div class="submenu text-dark">
                     <ul>
                     <li ><a href="single_search.html">單項查詢</a></li>
@@ -143,7 +143,7 @@
                 </div>
                 </li>
                 <li>
-                <a href="xxxx.php">聯絡資訊</a>
+                <a href="download.html">下載</a>
                 </li>
                 <li>
                 <a href="home.html">首頁</a>
@@ -190,11 +190,11 @@
                       <label for="gender">生理性別:</label>
                       <select name="gender">
                         <option value="">All</option>
-                        <option value="male">男</option>
-                        <option value="female">女</option>
+                        <option value="male">male</option>
+                        <option value="female">female</option>
                       </select>
                       <hr>
-                    </div>
+                    </div>  
                     <div class="form-layout2">
                       <label for="datetime">出生日期(起始):</label>
                       <input type="date" name="Sdatetime"placeholder="請輸入西元年" style="font-size: 1rem;" required>
@@ -241,7 +241,7 @@
         </div>
       </div>
       <div style="margin-left:46%; font-size:2rem;">查詢結果</div>
-      <form method="post" action="transform.php">
+        <form method="post" id="uploadForm" action="transform.php">
           <section class="result-section">
             <?php
               if($test != null){
@@ -287,11 +287,60 @@
             </table>
             <?php }?>
             <section class="btn-layout"  >
-                <input type="submit" class="btn btn-info btn-lg vertical-center" style="align-items: center;" value="產生Json格式" >
+                <input type="button" id="submitButton" class="btn btn-info btn-lg vertical-center" style="align-items: center;" value="上傳" >
             </section>
         </section>
       </form>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submitButton');
+        if (submitButton) {
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault(); // 阻止按鈕默認行為
+
+                let checkboxes = document.querySelectorAll('.patient-checkbox');
+                let selectedValues = [];
+
+                checkboxes.forEach(function(checkbox) {
+                    if (checkbox.checked) {
+                        selectedValues.push(checkbox.value);
+                    }
+                });
+
+                console.log('要传输的数据:', JSON.stringify(selectedValues));
+                let formData = new FormData();
+                formData.append('choose', JSON.stringify(selectedValues));
+
+                fetch('transformAPI.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // 處理成功回應
+                    console.log('Success:', data);
+                    if (data && data.length > 0 && data[0].id) {
+                        const patientUrl = `http://182.233.92.77:8080/fhir/Patient/${data[0].id}`;
+                        console.log('Patient URL:', patientUrl);
+                        alert('上傳成功病患資料URL: ' + patientUrl);
+                    } else {
+                        console.warn('上傳失敗: 沒有找到病患資料 ID', data);
+                        alert('上傳成功，但沒有找到病患資料 ID');
+                    }
+                })
+                .catch(error => {
+                    // 處理錯誤
+                    console.error('Error:', error);
+                    alert('上傳失敗');
+                });
+            });
+        } else {
+            console.error('找不到 submitButton 元素');
+        }
+    });
+</script>
+ 
 </body>
 </html>
 

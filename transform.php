@@ -80,7 +80,7 @@
                 </h2>
                 </div>
             </div>
-            </div>
+            </div>  
         </section>
             <pre id="jsonContainers"></pre>
         </main>
@@ -88,7 +88,7 @@
     <?php
 
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     //transform
     $choose = isset($_POST['choose']) ? $_POST['choose'] :[];
     $manyPatient = []; // 新增一個陣列用來存放病人資料
@@ -104,22 +104,23 @@
             "resourceType" => "Patient",
             "id" => $data[0],
             "meta" => [
-                "profile" => []
+                "versionId" => "1",
+                "lastUpdated" => "2024-05-23T16:58:33.474+00:00",
+                "source" => "#Pvo08oiL72MECZKZ"
             ],
-
             "identifier" => [
                 [
-                    "use" => "official",
+                    "use" => "usual",
                     "type" => [
                         "coding" => [
                             [
-                                "system" => "http://terminology.hl7.org/CodeSystem/v2-0203",
-                                "code" => "NNxxx"
+                                "system" => "http://hl7.org/fhir/v2/0203",
+                                "code" => "MR"
                             ]
                         ]
                     ],
-                    "system" => "http://www.moi.gov.tw/",
-                    "value" => "A123456789",
+                    "system" => "http://hospital.smarthealthit.org",
+                    "value" => "12345"
                 ],
                 [
                     "use" => "official",
@@ -135,15 +136,14 @@
                     "value" => $data[2]
                 ]
             ],
-
             "name" => [
                 [
+                    "use" => "official",
                     "given" => [$data[4]],
-                    "family" => "Doe",
-                    // other name parts
+                    "family" => "Doe"
                 ]
             ],
-            "telecom" => [
+        /*    "telecom" => [
                 [
                     "system" => "phone",
                     "value" => $data[5],
@@ -154,13 +154,21 @@
                     ]
                 ]
             ],
+        */    
             "gender" => $data[6],
             "birthDate" => $data[7],
-            "address" => [[
-                "text" => $data[8],
-                "country" => "TW"
-            ]],
-            "maritalStatus" => [
+            "address" => [
+                [
+                    "use" => "home",
+                    "line" =>"123 Main St" ,
+                    "city" => "Anytown",
+                    "state" => "Anystate",
+                    "postalCode" => "12345",
+                    "text" => $data[8],
+                    "country" => "TW"
+                ]
+            ],
+        /*     "maritalStatus" => [
                 "coding" => [
                     [
                         "system" => "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
@@ -168,7 +176,6 @@
                     ]
                 ]
             ],
-
             "contact" => [
                 [
                     "relationship" => [
@@ -209,7 +216,9 @@
             "managingOrganization" => [
                 "reference" => $data[13]
             ]
+        */
         ];
+
 
         $manyPatient[] = $patient; 
     
@@ -221,16 +230,15 @@
         // 關閉 <div> 標籤
         echo "</div>";
     } 
-    }
+    
     $jsonData = json_encode($manyPatient, JSON_PRETTY_PRINT);
 
-?>
+?> 
         <section class="btn-layout">
             <button class="btn btn-info btn-lg" onclick="uploadPatients()">上傳</button>
         </section>
 
-        <script>
-        
+        <script>   
  // 取得要顯示 JSON 資料的容器
 var jsonContainer = document.getElementById('jsonContainers');
 
@@ -238,47 +246,36 @@ var jsonContainer = document.getElementById('jsonContainers');
 jsonContainer.innerHTML = '';
 
 // 將 JSON 資料轉換成字串，並顯示在容器中
-jsonContainer.innerHTML += '<pre>' + JSON.stringify(jsonData, null, 2) + '</pre>';
+jsonContainer.innerHTML += '<pre>' + JSON.stringify(<?php echo json_encode($jsonData); ?>, null, 2) + '</pre>';
 
 
-            function uploadPatients() {
-            // 取得 PHP 產生的 JSON 資料
-            var jsonData = <?php echo $jsonData; ?>;
+function uploadPatients() {
+    // 取得 PHP 產生的 JSON 資料
+    var jsonData = <?php echo $jsonData; ?>;
 
-            console.log(jsonData);
+    // 迭代所有選擇的病人
+    jsonData.forEach(function ($manyPatient) { 
+        // 使用 XMLHttpRequest 發送 POST 請求
+        var xhr = new XMLHttpRequest();
+        var url = "transformAPI.php";
+        var jsonData = <?php echo json_encode($jsonData); ?>; 
 
-            // 迭代所有選擇的病人
-            jsonData.forEach(function (patientData) {
-                console.log(patientData);
-                // 在這裡放置資料轉換的程式碼，可以使用 patientData
-                // patientData 就是每個病人的 JSON 數據
-                var transformedData = {
-                    resource: patientData
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log("上傳成功:", xhr.responseText);
+                } else {
+                    console.error("上傳失敗:", xhr.statusText);
+                }
+            }
         };
 
-        // 使用 fetch 進行異步上傳
-        fetch('https://hapi.fhir.tw/fhir/Patient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/fhir+json',
-            },
-            body: JSON.stringify(transformedData),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('上傳失敗:', response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('上傳成功:', data);
-        })
-        .catch(error => {
-            console.error('上傳失敗:', error.message);
-        });
+        xhr.send(JSON.stringify($manyPatient));
     });
 }
-
         </script>
 
     </body>
